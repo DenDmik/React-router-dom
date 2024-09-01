@@ -1,0 +1,27 @@
+.modal-content{
+    @apply bg-white scale-0 
+    transition-all duration-1000
+    rounded-lg
+    w-1/2 h-40
+    border-2 
+     border-red-300
+     }
+     .modal{
+        @apply  
+        fixed top-0 left-0 
+         bg-slate-900/50
+        transition-all duration-1000 
+        h-dvh w-dvw
+        flex items-center justify-center
+        opacity-0
+        
+        pointer-events-none;
+    
+        }
+                   
+    
+.block-modal{
+    @apply rounded-full text-center text-black;
+}
+
+
