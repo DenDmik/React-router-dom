@@ -9,5 +9,4 @@ export declare class UserController {
             password: string;
         } & import("./entities/user.entity").User;
     }>;
-    findOne(id: string): string;
 }

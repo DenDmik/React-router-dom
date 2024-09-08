@@ -8,35 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
+exports.LocalStrategy = void 0;
+const passport_local_1 = require("passport-local");
+const passport_1 = require("@nestjs/passport");
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
-const passport_1 = require("@nestjs/passport");
-const common_2 = require("@nestjs/common");
-const common_3 = require("@nestjs/common");
-let AuthController = class AuthController {
+let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)(passport_local_1.Strategy) {
     constructor(authService) {
+        super({ usernameField: 'email' });
         this.authService = authService;
     }
-    async login(req) {
-        return req.user;
+    async validate(email, password) {
+        const user = await this.authService.validateUser(email, password);
+        if (!user) {
+            throw new common_1.UnauthorizedException('Uncorrect email or password');
+        }
+        return user;
     }
 };
-exports.AuthController = AuthController;
-__decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('local')),
-    (0, common_2.Post)('login'),
-    __param(0, (0, common_3.Request)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "login", null);
-exports.AuthController = AuthController = __decorate([
-    (0, common_1.Controller)('auth'),
+exports.LocalStrategy = LocalStrategy;
+exports.LocalStrategy = LocalStrategy = __decorate([
+    (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
-], AuthController);
-//# sourceMappingURL=auth.controller.js.map
+], LocalStrategy);
+//# sourceMappingURL=local.strategy.js.map

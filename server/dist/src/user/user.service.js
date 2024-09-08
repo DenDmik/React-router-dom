@@ -36,17 +36,10 @@ let UserService = class UserService {
         });
         return { user };
     }
-    findAll() {
-        return `This action returns all user`;
-    }
-    findOne(id) {
-        return `This action returns a #${id} user`;
-    }
-    update(id, updateUserDto) {
-        return `This action updates a #${id} user`;
-    }
-    remove(id) {
-        return `This action removes a #${id} user`;
+    async findOne(email) {
+        return await this.userRepository.findOne({
+            where: { email, }
+        });
     }
 };
 exports.UserService = UserService;

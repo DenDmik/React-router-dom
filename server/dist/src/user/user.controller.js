@@ -23,9 +23,6 @@ let UserController = class UserController {
     create(createUserDto) {
         return this.userService.create(createUserDto);
     }
-    findOne(id) {
-        return this.userService.findOne(+id);
-    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -36,13 +33,6 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "findOne", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])
