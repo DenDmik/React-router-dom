@@ -6,6 +6,9 @@ import databaseparams from 'ENV';
 @Module({
     imports:[TypeOrmModule.forRootAsync({
         ///////////для чего ConfigModule не знаю...////////////
+        //может работать без этой строчки т.к ConfigModule импортирован
+        // в app.module, forRoot isGlobal:true
+
         imports:[ConfigModule],
         /////////////
         useFactory:(configService:ConfigService)=>({

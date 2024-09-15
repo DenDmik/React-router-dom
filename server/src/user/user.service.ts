@@ -11,6 +11,7 @@ export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository:Repository<User>
   ){}
+  //названо create произвольно а findOne встроенный метод Repositоry
   async create(createUserDto: CreateUserDto) {
      const userExist = await this.userRepository.findOne({
       where:{
@@ -41,6 +42,8 @@ export class UserService {
   //   return `This  removes a #${id} user`;
   // }
   /////////////////////////////////////////////////////
+  //здесь в название функции наше(произвольное) а в userRepositoty.findOne встроенный
+  //метод класса Repository, который находит одного user по email
   async findOne(email: string) {
     return await this.userRepository.findOne({
       where:{email,}

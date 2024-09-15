@@ -9,26 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthService = void 0;
+exports.LocalStrategy = void 0;
+const passport_local_1 = require("passport-local");
+const passport_1 = require("@nestjs/passport");
 const common_1 = require("@nestjs/common");
-const user_service_1 = require("../user/user.service");
-const argon2 = require("argon2");
-let AuthService = class AuthService {
-    constructor(userService) {
-        this.userService = userService;
+const auth_service_1 = require("./auth.service");
+let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)(passport_local_1.Strategy) {
+    constructor(authService) {
+        super({ usernameField: 'email' });
+        this.authService = authService;
     }
-    async validateUser(email, password) {
-        const user = await this.userService.findOne(email);
-        const passwordIsMatch = (user) ? await argon2.verify(user.password, password) : false;
-        if (user && passwordIsMatch) {
-            return user;
+    async validate(email, password) {
+        const user = await this.authService.validateUser(email, password);
+        if (!user) {
+            throw new common_1.UnauthorizedException('Uncorrect email or password');
         }
-        throw new common_1.UnauthorizedException('email or password is uncorrect');
+        return user;
     }
 };
-exports.AuthService = AuthService;
-exports.AuthService = AuthService = __decorate([
+exports.LocalStrategy = LocalStrategy;
+exports.LocalStrategy = LocalStrategy = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [user_service_1.UserService])
-], AuthService);
-//# sourceMappingURL=auth.service.js.map
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
+], LocalStrategy);
+//# sourceMappingURL=local2.strategy.js.map

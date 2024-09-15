@@ -7,6 +7,7 @@ import { LocalStrategy } from './local.strategy';
 
 
 @Module({
+  //на хера тут PassportModule ??, работает и без него
   imports:[UserModule,PassportModule],
   controllers: [AuthController],
   providers: [AuthService,LocalStrategy],
