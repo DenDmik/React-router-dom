@@ -13,9 +13,11 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const argon2 = require("argon2");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    constructor(userService) {
+    constructor(userService, jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
     async validateUser(email, password) {
         const user = await this.userService.findOne(email);
@@ -25,10 +27,20 @@ let AuthService = class AuthService {
         }
         throw new common_1.UnauthorizedException('email or password is uncorrect');
     }
+    async login(user) {
+        const payload = { id: user.id, email: user.email };
+        const { id, email } = user;
+        return {
+            id,
+            email,
+            access_token: this.jwtService.sign(payload),
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map
